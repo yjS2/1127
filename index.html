@@ -1,0 +1,62 @@
+<html>
+<head>
+<style>
+canvas{
+	background-image: url("landscape11.gif");
+	border:2px solid #000000;
+	display: block;
+	margin:auto;
+	border-image-width: 100%;
+}
+</style>
+</head>
+<body onload="startGame()">
+<script type="text/javascript">
+	size=20;
+function startGame(){
+	gamearea.start();
+}
+var gamearea={
+	canvas:document.createElement("canvas"),
+	start : function(){
+		this.canvas.width=1200;
+		this.canvas.height=600;
+		this.context=this.canvas.getContext("2d");
+		document.body.insertBefore(this.canvas,document.body.childNodes[0])
+		t=new target();
+		this.interval=setInterval(this.updateGameArea,50);
+
+	},
+	updateGameArea:function(){
+		gamearea.clear()
+		ang=Math.PI*0.01*cnt;
+		((ang==Math.PI)? t=new target(): cnt++);
+		t.update();
+		t.draw();
+
+	},
+	clear:function(){
+		gamearea.context.clearRect(0,0,gamearea.canvas.width,gamearea.canvas.height);
+	}
+}
+function target (){
+	this.y=580;
+	this.radiusY=580;
+	this.radiusX=600;
+	this.centerX=600;
+	this.centerY=600;
+	cnt=0;
+	this.x=this.radiusX+this.centerX;
+	this.draw=function(){
+		gamearea.context.fillstyle="black";
+		gamearea.context.fillRect(this.x,this.y,size,size);
+	}
+	this.update=function(){
+		this.x=this.centerX+this.radiusX*Math.cos(ang);
+		this.y=this.centerY-this.radiusY*Math.sin(ang);
+
+	}
+}	
+</script>	
+</body>
+</html>
